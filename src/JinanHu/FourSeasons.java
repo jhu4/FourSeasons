@@ -8,14 +8,14 @@ import ks.common.view.*;
 
 public class FourSeasons extends Solitaire{
 	Deck stock;
-	Pile upperleft,upperright,lowerleft,lowerright;
-	Pile crossup,crossdown,crossmiddle,crossleft,crossright;
+	Pile[] foundation = new Pile[4];
+	Pile[] cross = new Pile[5];
 	Pile wastepile;
 	int score,cardleft;
 	
 	DeckView stockview;
-	PileView[] = PileView[5]; 
-	PileView crossupview,crossdownview,crossleftview,crossrightview;
+	PileView[] crossview = new PileView[5]; 
+	PileView[] foundationview = new PileView[4];
 	PileView wastepileview;
 	IntegerView scoreview,cardleftview;
 	

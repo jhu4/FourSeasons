@@ -1,7 +1,8 @@
 package move;
+import ks.common.games.*;
 
 public interface IMove {
-	boolean execute();
-	boolean undo();
-	boolean isvalid();
+	boolean execute(Solitaire s);
+	boolean undo(Solitaire s);
+	boolean isvalid(Solitaire s);
 }
