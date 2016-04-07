@@ -14,7 +14,7 @@ public class IntegerView extends Widget {
 	protected static int integerViewCounter = 1;
 
 	/** Default fontsize for this widget [default = 48 point]. */
-	protected int fontSize = 48;
+	protected int fontSize = 22;
 
 	/** Font for this widget [default = 48 point, Plain, Dialog].  */
 	protected Font font = new Font ("Dialog", Font.PLAIN, 48);

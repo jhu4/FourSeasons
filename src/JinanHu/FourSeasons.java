@@ -17,8 +17,8 @@ public class FourSeasons extends Solitaire{
 	int basenumber;
 	
 	DeckView stockview;
-	PileView[] crossview = new PileView[5]; 
-	PileView[] foundationview = new PileView[4];
+	PileView[] crossview = new PileView[6]; 
+	PileView[] foundationview = new PileView[5];
 	PileView wastepileview;
 	IntegerView scoreview,numleftview;
 	
@@ -42,6 +42,7 @@ public class FourSeasons extends Solitaire{
 	@Override
 	public void initialize() {
 		initializeModel(52);
+		initializeView();
 		
 	}
 	
@@ -50,12 +51,10 @@ public class FourSeasons extends Solitaire{
 		stock.create(seed);
 		model.addElement (stock);   // add to our model (as defined within our superclass).
 		
-		numLeft = getNumLeft();
-		numLeft.setValue(46);
-		score = getScore();
-		score.setValue(0);
+		wastepile = new Pile("wastepile");
+		model.addElement(wastepile);
 		
-		
+				
 		//adding 4 foundations
 		for(int i=1;i<=4;i++){
 			foundation[i]=new Pile("foundation"+i);
@@ -99,7 +98,7 @@ public class FourSeasons extends Solitaire{
 		scoreview.setBounds(140+4*w,20,w,hh);
 		container.addWidget(scoreview);
 		
-		numleftview =new IntegerView(getScore());
+		numleftview =new IntegerView(getNumLeft());
 		numleftview.setBounds(140+4*w, 40+hh, w, hh);
 		container.addWidget(numleftview);
 		
