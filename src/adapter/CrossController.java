@@ -16,7 +16,7 @@ public class CrossController extends java.awt.event.MouseAdapter{
 	PileView crossview;
 	FourSeasons thegame;
 	
-	public CrossController(PileView cross, FourSeasons thegame){
+	public CrossController(FourSeasons thegame, PileView cross){
 		this.crossview=cross;
 		this.thegame=thegame;
 	}

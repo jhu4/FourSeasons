@@ -2,8 +2,11 @@ package JinanHu;
 
 import java.awt.Dimension;
 
+import adapter.*;
 import ks.client.gamefactory.GameWindow;
+import ks.common.controller.SolitaireMouseMotionAdapter;
 import ks.common.games.Solitaire;
+import ks.common.games.SolitaireUndoAdapter;
 import ks.common.model.*;
 import ks.common.view.*;
 import ks.launcher.Main;
@@ -42,7 +45,20 @@ public class FourSeasons extends Solitaire{
 	@Override
 	public void initialize() {
 		initializeModel(52);
+		
+		//initial dealing card
+				stock.shuffle(seed); 
+				foundation[1].add(stock.get()); //add base card
+				basenumber=foundation[1].peek().getRank();//initialize base number
+				for(int i=1;i<=5;i++){
+					cross[i].add(stock.get());
+				}
+				
+				this.updateScore(1);
+				this.updateNumberCardsLeft(51);
+				
 		initializeView();
+		initializeController();
 		
 	}
 	
@@ -66,18 +82,6 @@ public class FourSeasons extends Solitaire{
 			cross[i]=new Pile("pile"+i);
 			model.addElement(cross[i]);
 		}
-		
-		//initial dealing card
-		stock.shuffle(seed); 
-		foundation[1].add(stock.get()); //add base card
-		basenumber=foundation[1].peek().getRank();//initialize base number
-		for(int i=1;i<=5;i++){
-			cross[i].add(stock.get());
-		}
-		
-		this.updateScore(6);
-		this.updateNumberCardsLeft(46);
-		
 	}
 	
 	private void initializeView(){
@@ -141,9 +145,34 @@ public class FourSeasons extends Solitaire{
 	
 	
 	private void initializeController(){
+		stockview.setMouseAdapter(new StockController(this,stockview));
+		stockview.setMouseMotionAdapter(new SolitaireMouseMotionAdapter(this));
+		stockview.setUndoAdapter (new SolitaireUndoAdapter(this));
+		
+		// Now for Cross.
+		for (int i = 1; i <= 5; i++) {
+			crossview[i].setMouseAdapter (new CrossController (this, crossview[i]));
+			crossview[i].setMouseMotionAdapter (new SolitaireMouseMotionAdapter (this));
+			crossview[i].setUndoAdapter (new SolitaireUndoAdapter(this));
+		}
+
+		// Now for each Foundation.
+		for (int i = 1; i <= 4; i++) {
+			foundationview[i].setMouseAdapter (new FoundationController (this, foundationview[i]));
+			foundationview[i].setMouseMotionAdapter (new SolitaireMouseMotionAdapter (this));
+			foundationview[i].setUndoAdapter (new SolitaireUndoAdapter(this));
+		}
+
+		// WastePile
+		wastepileview.setMouseAdapter (new WastepileController (this, wastepileview));
+		wastepileview.setMouseMotionAdapter (new SolitaireMouseMotionAdapter (this));
+		wastepileview.setUndoAdapter (new SolitaireUndoAdapter(this));
 		
 	}
 	
+	public int getbasenum(){
+		return basenumber;
+	}
 	
 	/** Code to launch solitaire variation. */
 	public static void main (String []args) {
@@ -152,5 +181,6 @@ public class FourSeasons extends Solitaire{
 		GameWindow gw = Main.generateWindow(new FourSeasons(), 117);
 		gw.setVisible(true);
 	}
-
+	
+	
 }
