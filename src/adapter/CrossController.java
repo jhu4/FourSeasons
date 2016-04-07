@@ -25,15 +25,12 @@ public class CrossController extends java.awt.event.MouseAdapter{
 		Container c = thegame.getContainer();
 				
 		Pile cross = (Pile) crossview.getModelElement();
+		if(cross.empty()) return;
 		
-		
-			
-			
 		CardView cardview = crossview.getCardViewForTopCard (me);
 
 		// an invalid selection of some sort.
 		if (cardview == null) {
-			c.releaseDraggingObject();
 			return;
 		}
 		Widget w =  c.getActiveDraggingObject();
@@ -77,6 +74,7 @@ public class CrossController extends java.awt.event.MouseAdapter{
 		if (fromWidget==this.crossview){
 			Pile cross = (Pile) this.crossview.getModelElement();
 			cross.add(card);
+			return;
 		}
 		
 		Pile frompile = (Pile) fromWidget.getModelElement();

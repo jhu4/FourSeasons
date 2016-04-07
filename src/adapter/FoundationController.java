@@ -42,18 +42,16 @@ public class FoundationController extends java.awt.event.MouseAdapter{
 			return;
 		}
 		
-		Pile topile = (Pile) foundationview.getModelElement();
-		
 		CardView cardview = (CardView) w;
 		Card card = (Card) cardview.getModelElement();
 		if (card == null) {
 			System.err.println ("FoundationController::mouseReleased(): somehow CardView model element is null.");
 			return;
 		}
-		
 
 		int basenumber = thegame.getbasenum();
 		Pile frompile = (Pile) fromWidget.getModelElement();
+		Pile topile = (Pile) foundationview.getModelElement();
 		Move m = new MoveToFoundation(frompile, card, topile,basenumber);
 		if(m.doMove(thegame)){
 			thegame.pushMove(m);

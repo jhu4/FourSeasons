@@ -29,6 +29,7 @@ public class MoveToFoundation extends ks.common.model.Move{
 		
 		topile.add(draggingcard);
 		s.updateScore(1);
+		s.updateNumberCardsLeft(-1);
 		return true;
 	}
 

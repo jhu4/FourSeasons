@@ -27,6 +27,7 @@ public class WastepileController extends SolitaireReleasedAdapter{
 		Container c = thegame.getContainer();
 		
 		Pile wastepile = (Pile) wastepileview.getModelElement();
+		if(wastepile.empty()) return;
 		
 		CardView cardview = wastepileview.getCardViewForTopCard(me);
 		if (cardview == null) {
