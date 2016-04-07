@@ -24,25 +24,27 @@ public class CrossController extends java.awt.event.MouseAdapter{
 	public void mousePressed(MouseEvent me){
 		Container c = thegame.getContainer();
 				
-				Pile cross = (Pile) crossview.getModelElement();
+		Pile cross = (Pile) crossview.getModelElement();
 		
-				Card card = cross.get();
-				
-				
-				if(card==null){
-					return;
-				}
-				else{
-					Widget w =  c.getActiveDraggingObject();
-					if (w != Container.getNothingBeingDragged()) {
-						System.err.println ("CrossController::mousePressed(): Unexpectedly encountered a Dragging Object during a Mouse press.");
-						return;
-					}
-					CardView cardview = new CardView(card);
-					c.setActiveDraggingObject(cardview, me);
-					c.setDragSource(crossview);
-					crossview.redraw();
-				}
+		
+			
+			
+		CardView cardview = crossview.getCardViewForTopCard (me);
+
+		// an invalid selection of some sort.
+		if (cardview == null) {
+			c.releaseDraggingObject();
+			return;
+		}
+		Widget w =  c.getActiveDraggingObject();
+		if (w != Container.getNothingBeingDragged()) {
+			System.err.println ("CrossController::mousePressed(): Unexpectedly encountered a Dragging Object during a Mouse press.");
+			return;
+		}
+		c.setActiveDraggingObject (cardview, me);
+		c.setDragSource(crossview);
+		crossview.redraw();
+			
 	}
 	
 	public void mouseReleased(MouseEvent me){

@@ -3,14 +3,23 @@ package JinanHu;
 import java.awt.Dimension;
 
 import adapter.*;
-import ks.client.gamefactory.GameWindow;
+import ks.client.gamefactory.*;
 import ks.common.controller.SolitaireMouseMotionAdapter;
+import ks.common.controller.SolitaireReleasedAdapter;
 import ks.common.games.Solitaire;
 import ks.common.games.SolitaireUndoAdapter;
-import ks.common.model.*;
-import ks.common.view.*;
+import ks.common.games.SolvableSolitaire;
+import ks.common.model.BuildablePile;
+import ks.common.model.Card;
+import ks.common.model.Deck;
+import ks.common.model.Move;
+import ks.common.model.Pile;
+import ks.common.view.BuildablePileView;
+import ks.common.view.CardImages;
+import ks.common.view.DeckView;
+import ks.common.view.IntegerView;
+import ks.common.view.PileView;
 import ks.launcher.Main;
-
 
 public class FourSeasons extends Solitaire{
 	Deck stock;
@@ -47,15 +56,15 @@ public class FourSeasons extends Solitaire{
 		initializeModel(52);
 		
 		//initial dealing card
-				stock.shuffle(seed); 
-				foundation[1].add(stock.get()); //add base card
-				basenumber=foundation[1].peek().getRank();//initialize base number
-				for(int i=1;i<=5;i++){
-					cross[i].add(stock.get());
-				}
+		stock.shuffle(seed); 
+		foundation[1].add(stock.get()); //add base card
+		basenumber=foundation[1].peek().getRank();//initialize base number
+		for(int i=1;i<=5;i++){
+			cross[i].add(stock.get());
+		}
 				
-				this.updateScore(1);
-				this.updateNumberCardsLeft(51);
+		this.updateScore(1);
+		this.updateNumberCardsLeft(51);
 				
 		initializeView();
 		initializeController();
@@ -168,6 +177,10 @@ public class FourSeasons extends Solitaire{
 		wastepileview.setMouseMotionAdapter (new SolitaireMouseMotionAdapter (this));
 		wastepileview.setUndoAdapter (new SolitaireUndoAdapter(this));
 		
+		// Finally, cover the Container for any events not handled by a widget:
+		getContainer().setMouseMotionAdapter(new SolitaireMouseMotionAdapter(this));
+		getContainer().setMouseAdapter (new SolitaireReleasedAdapter(this));
+		getContainer().setUndoAdapter (new SolitaireUndoAdapter(this));
 	}
 	
 	public int getbasenum(){

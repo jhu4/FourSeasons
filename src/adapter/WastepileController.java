@@ -27,21 +27,20 @@ public class WastepileController extends SolitaireReleasedAdapter{
 		Container c = thegame.getContainer();
 		
 		Pile wastepile = (Pile) wastepileview.getModelElement();
-
-		Card card = wastepile.get();
-		if(card==null){
+		
+		CardView cardview = wastepileview.getCardViewForTopCard(me);
+		if (cardview == null) {
+			c.releaseDraggingObject();
 			return;
 		}
-		else{
-			Widget w =  c.getActiveDraggingObject();
-			if (w != Container.getNothingBeingDragged()) {
-				System.err.println ("WastepileController::mousePressed(): Unexpectedly encountered a Dragging Object during a Mouse press.");
-				return;
-			}
-			CardView cardview = new CardView(card);
-			c.setActiveDraggingObject(cardview, me);
-			c.setDragSource(wastepileview);
-			wastepileview.redraw();
+		Widget w =  c.getActiveDraggingObject();
+		if (w != Container.getNothingBeingDragged()) {
+			System.err.println ("WastepileController::mousePressed(): Unexpectedly encountered a Dragging Object during a Mouse press.");
+			return;
 		}
+		c.setActiveDraggingObject(cardview, me);
+		c.setDragSource(wastepileview);
+		wastepileview.redraw();
 	}
+
 }
