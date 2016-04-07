@@ -4,23 +4,36 @@ import ks.common.controller.*;
 import ks.common.games.Solitaire;
 import ks.common.model.*;
 import ks.common.view.*;
+import move.StockMoveWastepile;
 import JinanHu.FourSeasons;
+
+import java.awt.event.MouseEvent;
+
 import JinanHu.*;
 
 public class StockController extends SolitaireReleasedAdapter {
 	FourSeasons game;
-	Deck stock;
-	Pile wastepile;
+	DeckView stockview;
 	
-	public StockController(FourSeasons theGame, Deck stock, Pile wastepile) {
+	public StockController(FourSeasons theGame, DeckView stockview) {
 		super(theGame);
 		this.game=theGame;
-		this.wastepile=wastepile;
-		this.stock=stock;
+		this.stockview=stockview;
 	}
 	
-	public void mouseClicked(java.awt.event.MouseEvent me){
+	public void mouseClicked(MouseEvent me){
 		
-	}
-	
+		Deck stock = (Deck) stockview.getModelElement();
+		if(stock.count()==0){
+			System.err.println ("StockController::mouseClicked(). Won game error");
+			return;
+		}
+		
+		Pile wastepile = (Pile) game.getModelElement("wastepile");
+		Move m = new StockMoveWastepile(stock, wastepile);
+		if(m.doMove(game)){
+			game.pushMove(m);
+			game.refreshWidgets();
+		}
+	}	
 }

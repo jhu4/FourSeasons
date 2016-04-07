@@ -4,7 +4,7 @@ import ks.common.games.Solitaire;
 import ks.common.model.Deck;
 import ks.common.model.Pile;
 
-public class StockMoveWastepile implements IMove{
+public class StockMoveWastepile extends ks.common.model.Move{
 	Deck stock;
 	Pile wastepile;
 	
@@ -13,24 +13,24 @@ public class StockMoveWastepile implements IMove{
 		this.wastepile=wastepile;
 	}
 
-	@Override
-	public boolean execute(Solitaire s) {
+	public boolean undo(Solitaire s) {
+		// Can't undo
+		return false;
+	}
+
+	public boolean doMove(Solitaire s) {
 		// VALIDATE:
-		if (isvalid(s) == false)
+		if (valid(s) == false)
 			return false;
 		
 		wastepile.add(stock.get());
 		return true;
 	}
 
-	public boolean undo(Solitaire s) {
-		// Can't undo
-		return false;
-	}
-
-	@Override
-	public boolean isvalid(Solitaire s) {
-		// TODO Auto-generated method stub
+	public boolean valid(Solitaire s) {
+		
+		if(stock.count()>=1) {return true;}
+		
 		return false;
 	}
 }
