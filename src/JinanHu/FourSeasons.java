@@ -172,6 +172,16 @@ public class FourSeasons extends Solitaire{
 		wastepileview.setMouseMotionAdapter (new SolitaireMouseMotionAdapter (this));
 		wastepileview.setUndoAdapter (new SolitaireUndoAdapter(this));
 		
+		// Ensure that any releases (and movement) are handled by the non-interactive widgets
+		numleftview.setMouseMotionAdapter (new SolitaireMouseMotionAdapter(this));
+		numleftview.setMouseAdapter (new SolitaireReleasedAdapter(this));
+		numleftview.setUndoAdapter (new SolitaireUndoAdapter(this));
+
+		// same for scoreView
+		scoreview.setMouseMotionAdapter (new SolitaireMouseMotionAdapter(this));
+		scoreview.setMouseAdapter (new SolitaireReleasedAdapter(this));
+		scoreview.setUndoAdapter (new SolitaireUndoAdapter(this));
+		
 		// Finally, cover the Container for any events not handled by a widget:
 		getContainer().setMouseMotionAdapter(new SolitaireMouseMotionAdapter(this));
 		getContainer().setMouseAdapter (new SolitaireReleasedAdapter(this));
