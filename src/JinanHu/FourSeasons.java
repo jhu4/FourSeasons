@@ -43,7 +43,7 @@ public class FourSeasons extends Solitaire{
 	}
  
 	public boolean hasWon() {
-		return getScoreValue() == 46;
+		return getScoreValue() == 52;
 	}
 
 	@Override

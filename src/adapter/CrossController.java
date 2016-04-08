@@ -15,18 +15,18 @@ import move.MoveToCross;
 public class CrossController extends java.awt.event.MouseAdapter{
 	PileView crossview;
 	FourSeasons thegame;
-	
+
 	public CrossController(FourSeasons thegame, PileView cross){
 		this.crossview=cross;
 		this.thegame=thegame;
 	}
-	
+
 	public void mousePressed(MouseEvent me){
 		Container c = thegame.getContainer();
-				
+
 		Pile cross = (Pile) crossview.getModelElement();
 		if(cross.empty()) return;
-		
+
 		CardView cardview = crossview.getCardViewForTopCard (me);
 
 		// an invalid selection of some sort.
@@ -41,19 +41,19 @@ public class CrossController extends java.awt.event.MouseAdapter{
 		c.setActiveDraggingObject (cardview, me);
 		c.setDragSource(crossview);
 		crossview.redraw();
-			
+
 	}
-	
+
 	public void mouseReleased(MouseEvent me){
 		Container c = thegame.getContainer();
-		
+
 		/** Return if there is no card being dragged chosen. */
 		Widget w = c.getActiveDraggingObject();
 		if (w == Container.getNothingBeingDragged()) {
 			c.releaseDraggingObject();		
 			return;
 		}
-		
+
 		/** Recover */
 		Widget fromWidget = c.getDragSource();
 		if (fromWidget == null) {
@@ -61,36 +61,37 @@ public class CrossController extends java.awt.event.MouseAdapter{
 			c.releaseDraggingObject();
 			return;
 		}
-		
+
 		Pile topile = (Pile) crossview.getModelElement();
-		
+
 		CardView cardview = (CardView) w;
 		Card card = (Card) cardview.getModelElement();
 		if (card == null) {
 			System.err.println ("CrossController::mouseReleased(): somehow CardView model element is null.");
 			return;
 		}
-		
+
+		//This is causing problem
 		if (fromWidget==this.crossview){
 			Pile cross = (Pile) this.crossview.getModelElement();
 			cross.add(card);
-			return;
+		} else {
+
+			Pile frompile = (Pile) fromWidget.getModelElement();
+			Move m = new MoveToCross(frompile, card, topile);
+			if(m.doMove(thegame)){
+				thegame.pushMove(m);
+			}
+			else{
+				frompile.add(card);
+			}
 		}
-		
-		Pile frompile = (Pile) fromWidget.getModelElement();
-		Move m = new MoveToCross(frompile, card, topile);
-		if(m.doMove(thegame)){
-			thegame.pushMove(m);
-		}
-		else{
-			frompile.add(card);
-		}
-		
-		
+
+
 		// release the dragging object, (container will reset dragSource)
-				c.releaseDraggingObject();
-				
-				c.repaint();
+		c.releaseDraggingObject();
+
+		c.repaint();
 	}
-	
+
 }
