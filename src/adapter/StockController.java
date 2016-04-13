@@ -21,7 +21,7 @@ public class StockController extends SolitaireReleasedAdapter {
 		this.stockview=stockview;
 	}
 	
-	public void mouseClicked(MouseEvent me){
+	public void mousePressed(MouseEvent me){
 		
 		Deck stock = (Deck) stockview.getModelElement();
 		if(stock.count()==0){
