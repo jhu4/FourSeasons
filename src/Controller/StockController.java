@@ -1,10 +1,9 @@
-package adapter;
+package Controller;
 
 import ks.common.controller.*;
 import ks.common.games.Solitaire;
 import ks.common.model.*;
 import ks.common.view.*;
-import move.StockMoveWastepile;
 import JinanHu.FourSeasons;
 
 import java.awt.event.MouseEvent;

@@ -2,7 +2,7 @@ package JinanHu;
 
 import java.awt.Dimension;
 
-import adapter.*;
+import Controller.*;
 import ks.client.gamefactory.*;
 import ks.common.controller.SolitaireMouseMotionAdapter;
 import ks.common.controller.SolitaireReleasedAdapter;
@@ -48,16 +48,10 @@ public class FourSeasons extends Solitaire{
 
 	@Override
 	public void initialize() {
-		initializeModel(52);
+		initializeModel(getSeed());
 		
-		//initial dealing card
-		stock.shuffle(seed); 
-		foundation[1].add(stock.get()); //add base card
-		basenumber=foundation[1].peek().getRank();//initialize base number
-		for(int i=1;i<=5;i++){
-			cross[i].add(stock.get());
-		}
-				
+		initializeMove();		
+		
 		this.updateScore(1);
 		this.updateNumberCardsLeft(51);
 				
@@ -66,7 +60,7 @@ public class FourSeasons extends Solitaire{
 		
 	}
 	
-	private void initializeModel(int seed){
+	void initializeModel(int seed){
 		stock = new Deck("deck");
 		stock.create(seed);
 		model.addElement (stock);   // add to our model (as defined within our superclass).
@@ -86,9 +80,19 @@ public class FourSeasons extends Solitaire{
 			cross[i]=new Pile("pile"+i);
 			model.addElement(cross[i]);
 		}
+	}	
+		
+	void initializeMove(){	
+		//initial dealing card
+//		stock.shuffle(seed); 
+		foundation[1].add(stock.get()); //add base card
+		basenumber=foundation[1].peek().getRank();//initialize base number
+		for(int i=1;i<=5;i++){
+			cross[i].add(stock.get());
+		}		
 	}
 	
-	private void initializeView(){
+	void initializeView(){
 		CardImages ci = getCardImages();
 		int w = ci.getWidth();
 		int h = ci.getHeight();
@@ -148,7 +152,7 @@ public class FourSeasons extends Solitaire{
 	}
 	
 	
-	private void initializeController(){
+	void initializeController(){
 		stockview.setMouseAdapter(new StockController(this,stockview));
 		stockview.setMouseMotionAdapter(new SolitaireMouseMotionAdapter(this));
 		stockview.setUndoAdapter (new SolitaireUndoAdapter(this));

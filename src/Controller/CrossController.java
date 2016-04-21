@@ -1,4 +1,4 @@
-package adapter;
+package Controller;
 
 import java.awt.event.MouseEvent;
 
@@ -10,7 +10,6 @@ import ks.common.view.CardView;
 import ks.common.view.Container;
 import ks.common.view.PileView;
 import ks.common.view.Widget;
-import move.MoveToCross;
 
 public class CrossController extends java.awt.event.MouseAdapter{
 	PileView crossview;

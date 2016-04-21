@@ -1,4 +1,4 @@
-package move;
+package Controller;
 
 import ks.common.games.Solitaire;
 import ks.common.model.Card;
@@ -22,11 +22,11 @@ public class MoveToCross extends ks.common.model.Move{
 	}
 
 	public boolean doMove(Solitaire s) {
-		if(!valid(s))
-			return false;
-		
-		topile.add(draggingcard);
-		return true;
+		if(valid(s)){
+			topile.add(draggingcard);
+			return true;
+		}
+		return false;
 	}
 
 	public boolean valid(Solitaire s) {

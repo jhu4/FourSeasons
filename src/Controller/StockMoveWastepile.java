@@ -1,4 +1,4 @@
-package move;
+package Controller;
 
 import ks.common.games.Solitaire;
 import ks.common.model.Deck;
@@ -19,12 +19,11 @@ public class StockMoveWastepile extends ks.common.model.Move{
 	}
 
 	public boolean doMove(Solitaire s) {
-		// VALIDATE:
-		if (valid(s) == false)
-			return false;
-		
-		wastepile.add(stock.get());
-		return true;
+		if(valid(s)){
+			wastepile.add(stock.get());
+			return true;
+		}
+		return false;
 	}
 
 	public boolean valid(Solitaire s) {

@@ -1,4 +1,4 @@
-package move;
+package Controller;
 
 import ks.common.games.Solitaire;
 import ks.common.model.Card;
@@ -24,13 +24,13 @@ public class MoveToFoundation extends ks.common.model.Move{
 	}
 
 	public boolean doMove(Solitaire s) {
-		if(!valid(s))
-			return false;
-		
-		topile.add(draggingcard);
-		s.updateScore(1);
-		s.updateNumberCardsLeft(-1);
-		return true;
+		if(valid(s)){
+			topile.add(draggingcard);
+			s.updateScore(1);
+			s.updateNumberCardsLeft(-1);
+			return true;
+		}
+		return false;
 	}
 
 	public boolean valid(Solitaire s) {
