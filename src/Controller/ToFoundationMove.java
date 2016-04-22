@@ -22,16 +22,18 @@ public class ToFoundationMove extends ks.common.model.Move{
 		if(topile.empty()){
 			return false;
 		}
+		
 		frompile.add(topile.get());
 		s.updateScore(-1);
 		s.updateNumberCardsLeft(1);
-		return false;
+		s.refreshWidgets();
+		return true;
 	}
 	
 	@Override
 	public boolean doMove(Solitaire s) {
 		if(valid(s)){
-			topile.add(draggingcard);
+			topile.add(this.draggingcard);
 			s.updateScore(1);
 			s.updateNumberCardsLeft(-1);
 			return true;
@@ -41,6 +43,7 @@ public class ToFoundationMove extends ks.common.model.Move{
 	
 	@Override
 	public boolean valid(Solitaire s) {
+		
 		
 		if(draggingcard==null) {return false;}
 		
