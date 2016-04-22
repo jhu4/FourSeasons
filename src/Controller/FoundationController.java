@@ -22,52 +22,6 @@ public class FoundationController extends java.awt.event.MouseAdapter{
 	}
 	
 	public void mouseReleased(MouseEvent me){
-//		Container c = thegame.getContainer();
-//		
-//		/** Return if there is no card being dragged chosen. */
-//		Widget w = c.getActiveDraggingObject();
-//		if (w == Container.getNothingBeingDragged()) {
-//			c.releaseDraggingObject();		
-//			return;
-//		}
-		
-		/** Recover */
-//		Widget fromWidget = c.getDragSource();
-//		if (fromWidget == null) {
-//			System.err.println ("CrossController::mouseReleased(): somehow no dragSource in container.");
-//			c.releaseDraggingObject();
-//			return;
-//		}
-//		
-//		Pile topile = (Pile) foundationview.getModelElement();
-//		if(topile==null) {
-//			System.err.println("FoundationController::MouseReleased: topile is null");
-//			c.releaseDraggingObject();
-//			return;
-//		}
-//		
-//		CardView cardview = (CardView) w;
-//		Card card = (Card) cardview.getModelElement();
-//		if(card==null){
-//			System.err.println("FoundationController::MouseReleased: card is null");
-//			c.releaseDraggingObject();
-//			return;
-//		}
-//		
-//		Pile frompile = (Pile) foundationview.getModelElement();
-//		Move m = new ToFoundationMove(frompile,card,topile,thegame.getbasenumber());
-//		if(m.doMove(thegame)){
-//			thegame.pushMove(m);
-//		}
-//		else{
-//			frompile.add(card);
-//		}
-		
-//		foundationview.redraw();
-//		thegame.refreshWidgets();
-//		c.releaseDraggingObject();
-//		c.repaint();		
-		
 		Container c = thegame.getContainer();
 		
 		
