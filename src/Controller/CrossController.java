@@ -75,7 +75,7 @@ public class CrossController extends java.awt.event.MouseAdapter{
 			return;
 		}
 
-		//This is causing problem
+		
 		if (fromWidget==this.crossview){
 			Pile cross = (Pile) this.crossview.getModelElement();
 			cross.add(card);
@@ -88,11 +88,12 @@ public class CrossController extends java.awt.event.MouseAdapter{
 				
 			}
 			else{
-				frompile.add(card);
+//				frompile.add(card);
+				fromWidget.returnWidget(cardview);
 			}
 		}
 
-		thegame.refreshWidgets();
+//		thegame.refreshWidgets();
 		// release the dragging object, (container will reset dragSource)
 		c.releaseDraggingObject();
 		c.repaint();

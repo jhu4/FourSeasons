@@ -15,12 +15,16 @@ public class ToCrossMove extends ks.common.model.Move{
 		this.frompile=frompile;
 	}
 
-	
+	@Override
 	public boolean undo(Solitaire s) {
+		if(topile.empty()){
+			return false;
+		}
 		frompile.add(topile.get());
 		return true;
 	}
-
+	
+	@Override
 	public boolean doMove(Solitaire s) {
 		if(valid(s)){
 			topile.add(draggingcard);
@@ -29,6 +33,7 @@ public class ToCrossMove extends ks.common.model.Move{
 		return false;
 	}
 
+	@Override
 	public boolean valid(Solitaire s) {
 		
 		if(draggingcard==null) {return false;}
