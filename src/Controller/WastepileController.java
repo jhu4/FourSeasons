@@ -38,10 +38,9 @@ public class WastepileController extends SolitaireReleasedAdapter{
 		if (w != Container.getNothingBeingDragged()) {
 			System.err.println ("WastepileController::mousePressed(): Unexpectedly encountered a Dragging Object during a Mouse press.");
 			return;
-		}
+		} 
 		c.setActiveDraggingObject(cardview, me);
 		c.setDragSource(wastepileview);
-		wastepileview.redraw();
 		thegame.refreshWidgets();
 	}
 

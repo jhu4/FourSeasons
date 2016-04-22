@@ -24,7 +24,6 @@ public class StockController extends SolitaireReleasedAdapter {
 		
 		Deck stock = (Deck) stockview.getModelElement();
 		if(stock.count()==0){
-			System.err.println ("StockController::mouseClicked(). Won game error");
 			return;
 		}
 		

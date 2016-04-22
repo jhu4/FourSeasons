@@ -48,38 +48,18 @@ public class FoundationController extends java.awt.event.MouseAdapter{
 		}
 
 		int basenumber = thegame.getbasenumber();
-//		Pile frompile = (Pile) fromWidget.getModelElement();
 		Pile topile = (Pile) foundationview.getModelElement();
-//		if (topile == null){
-//			System.err.println("FountaionController::MouseReleased():to pile is null");
-//			return;
-//		}
-//		Move m = new ToFoundationMove(frompile, card, topile,basenumber);
-//		if(m.doMove(thegame)){
-//			thegame.pushMove(m);
-//		
-//		}
-//		else{
-////			frompile.add(card);
-//			fromWidget.returnWidget(w);
-//		}
-		
-		if (fromWidget==this.foundationview){
-			Pile cross = (Pile) this.foundationview.getModelElement();
-			cross.add(card);
-		} else {
-
-			Pile frompile = (Pile) fromWidget.getModelElement();
-			Move m = new ToFoundationMove(frompile,card, topile,thegame.getbasenumber());
-			if(m.doMove(thegame)){
-				thegame.pushMove(m);
-				
-			}
-			else{
-//				frompile.add(card);
-				fromWidget.returnWidget(cardview);
-			}
+		Pile frompile = (Pile) fromWidget.getModelElement();
+		Move m = new ToFoundationMove(frompile,card, topile,thegame.getbasenumber());
+		if(m.doMove(thegame)){
+			thegame.pushMove(m);
+			
 		}
+		else{
+//				frompile.add(card);
+			fromWidget.returnWidget(cardview);
+		}
+	
 		
 		
 		
