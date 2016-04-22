@@ -29,10 +29,10 @@ public class FoundationController extends java.awt.event.MouseAdapter{
 		Widget w = c.getActiveDraggingObject();
 		if (w == Container.getNothingBeingDragged()) {
 			c.releaseDraggingObject();		
-			return;
-		}
+			return; 
+		} 
 		
-		/** Recover */
+		/** Recover */ 
 		Widget fromWidget = c.getDragSource();
 		if (fromWidget == null) {
 			System.err.println ("oundationController::mouseReleased(): somehow no dragSource in container.");
@@ -47,24 +47,26 @@ public class FoundationController extends java.awt.event.MouseAdapter{
 			return;
 		}
 
-		int basenumber = thegame.getbasenum();
+		int basenumber = thegame.getbasenumber();
 		Pile frompile = (Pile) fromWidget.getModelElement();
 		Pile topile = (Pile) foundationview.getModelElement();
-		Move m = new MoveToFoundation(frompile, card, topile,basenumber);
+		if (topile == null){
+			System.err.println("FountaionController::MouseReleased():to pile is null");
+			return;
+		}
+		Move m = new ToFoundationMove(frompile, card, topile,basenumber);
 		if(m.doMove(thegame)){
 			thegame.pushMove(m);
+		
 		}
 		else{
 			frompile.add(card);
 		}
 		
-		
+		thegame.refreshWidgets();
 		// release the dragging object, (container will reset dragSource)
-				c.releaseDraggingObject();
-				
-				c.repaint();
-		
-				
+		c.releaseDraggingObject();
+		c.repaint();			
 	}
 	
 }

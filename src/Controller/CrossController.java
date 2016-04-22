@@ -42,7 +42,7 @@ public class CrossController extends java.awt.event.MouseAdapter{
 		crossview.redraw();
 
 	}
-
+ 
 	public void mouseReleased(MouseEvent me){
 		Container c = thegame.getContainer();
 
@@ -62,9 +62,14 @@ public class CrossController extends java.awt.event.MouseAdapter{
 		}
 
 		Pile topile = (Pile) crossview.getModelElement();
-
+		if(topile==null){
+			System.err.println ("CrossController::mouseReleased(): to pile is null.");
+			c.releaseDraggingObject();
+			return;
+		}
+		
 		CardView cardview = (CardView) w;
-		Card card = (Card) cardview.getModelElement();
+		Card card = (Card) cardview.getModelElement(); 
 		if (card == null) {
 			System.err.println ("CrossController::mouseReleased(): somehow CardView model element is null.");
 			return;
@@ -77,19 +82,19 @@ public class CrossController extends java.awt.event.MouseAdapter{
 		} else {
 
 			Pile frompile = (Pile) fromWidget.getModelElement();
-			Move m = new MoveToCross(frompile, card, topile);
+			Move m = new ToCrossMove(frompile,card, topile);
 			if(m.doMove(thegame)){
 				thegame.pushMove(m);
+				
 			}
 			else{
 				frompile.add(card);
 			}
 		}
 
-
+		thegame.refreshWidgets();
 		// release the dragging object, (container will reset dragSource)
 		c.releaseDraggingObject();
-
 		c.repaint();
 	}
 

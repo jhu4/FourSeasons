@@ -29,10 +29,10 @@ public class StockController extends SolitaireReleasedAdapter {
 		}
 		
 		Pile wastepile = (Pile) game.getModelElement("wastepile");
-		Move m = new StockMoveWastepile(stock, wastepile);
+		Move m = new StockToWastepileMove(stock, wastepile);
 		if(m.doMove(game)){
 			game.pushMove(m);
-			game.refreshWidgets();
 		}
+		game.refreshWidgets();
 	}	
 }

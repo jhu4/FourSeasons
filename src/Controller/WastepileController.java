@@ -42,6 +42,7 @@ public class WastepileController extends SolitaireReleasedAdapter{
 		c.setActiveDraggingObject(cardview, me);
 		c.setDragSource(wastepileview);
 		wastepileview.redraw();
+		thegame.refreshWidgets();
 	}
 
 }

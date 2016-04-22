@@ -9,6 +9,7 @@ import ks.common.controller.SolitaireReleasedAdapter;
 import ks.common.games.Solitaire;
 import ks.common.games.SolitaireUndoAdapter;
 import ks.common.model.Deck;
+import ks.common.model.Move;
 import ks.common.model.Pile;
 import ks.common.view.CardImages;
 import ks.common.view.DeckView;
@@ -33,7 +34,7 @@ public class FourSeasons extends Solitaire{
 		super();
 	};
 	
-	public int getBaseNumber(){
+	public int getbasenumber(){
 		return basenumber;
 	}
 	
@@ -41,23 +42,26 @@ public class FourSeasons extends Solitaire{
 	public String getName() {
 		return "FourSeasons";
 	}
- 
+	
+	@Override
 	public boolean hasWon() {
-		return getScoreValue() == 52;
+		return this.getScoreValue()== 52;
 	}
 
 	@Override
 	public void initialize() {
 		initializeModel(getSeed());
-		
-		initializeMove();		
-		
-		this.updateScore(1);
-		this.updateNumberCardsLeft(51);
-				
 		initializeView();
 		initializeController();
-		
+		Move init = new InitializeMove(stock,foundation[1],cross);
+		if(!init.doMove(this)){
+			System.err.println ("FourSeasons::initialize(). Unable to deal initial hand.");
+		}
+		this.container.repaint();
+		updateScore(1);
+		updateNumberCardsLeft(51);
+		basenumber=foundation[1].peek().getRank();
+
 	}
 	
 	void initializeModel(int seed){
@@ -77,20 +81,12 @@ public class FourSeasons extends Solitaire{
 		
 		//adding 5 crosses
 		for(int i=1;i<=5;i++){
-			cross[i]=new Pile("pile"+i);
+			cross[i]=new Pile("cross"+i);
 			model.addElement(cross[i]);
 		}
 	}	
 		
-	void initializeMove(){	
-		//initial dealing card
-//		stock.shuffle(seed); 
-		foundation[1].add(stock.get()); //add base card
-		basenumber=foundation[1].peek().getRank();//initialize base number
-		for(int i=1;i<=5;i++){
-			cross[i].add(stock.get());
-		}		
-	}
+	
 	
 	void initializeView(){
 		CardImages ci = getCardImages();
@@ -107,15 +103,17 @@ public class FourSeasons extends Solitaire{
 		container.addWidget(wastepileview);
 		
 		scoreview=new IntegerView (getScore());
+		scoreview.setFontSize(20);
 		scoreview.setBounds(140+4*w,20,w,hh);
 		container.addWidget(scoreview);
 		
 		numleftview =new IntegerView(getNumLeft());
+		numleftview.setFontSize(20);
 		numleftview.setBounds(140+4*w, 40+hh, w, hh);
 		container.addWidget(numleftview);
 		
 		//initializing foundation views
-		for(int i=1;i<=4;i++){
+		for(int i=1;i<5;i++){
 			foundationview[i]=new PileView(foundation[i]);
 			switch(i){
 				case 1:
@@ -137,7 +135,7 @@ public class FourSeasons extends Solitaire{
 		}
 		
 		//initializing 5 crosses
-		for(int i=1;i<=3;i++){
+		for(int i=1;i<4;i++){
 			crossview[i]=new PileView(cross[i]);
 			crossview[i].setBounds(80+2*w,20*i+(i-1)*h,w,h);
 			container.addWidget(crossview[i]);
@@ -158,14 +156,14 @@ public class FourSeasons extends Solitaire{
 		stockview.setUndoAdapter (new SolitaireUndoAdapter(this));
 		
 		// Now for Cross.
-		for (int i = 1; i <= 5; i++) {
+		for (int i = 1; i <6; i++) {
 			crossview[i].setMouseAdapter (new CrossController (this, crossview[i]));
 			crossview[i].setMouseMotionAdapter (new SolitaireMouseMotionAdapter (this));
 			crossview[i].setUndoAdapter (new SolitaireUndoAdapter(this));
 		}
 
 		// Now for each Foundation.
-		for (int i = 1; i <= 4; i++) {
+		for (int i = 1; i <5; i++) {
 			foundationview[i].setMouseAdapter (new FoundationController (this, foundationview[i]));
 			foundationview[i].setMouseMotionAdapter (new SolitaireMouseMotionAdapter (this));
 			foundationview[i].setUndoAdapter (new SolitaireUndoAdapter(this));
@@ -192,9 +190,6 @@ public class FourSeasons extends Solitaire{
 		getContainer().setUndoAdapter (new SolitaireUndoAdapter(this));
 	}
 	
-	public int getbasenum(){
-		return basenumber;
-	}
 	
 	/** Code to launch solitaire variation. */
 	public static void main (String []args) {
